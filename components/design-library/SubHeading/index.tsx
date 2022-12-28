@@ -5,6 +5,6 @@ interface Props {
 export default function SubHeading({ children }: Props) {
 
   return (
-    <h2 className="text-base text-slate-400">{children}</h2>
+    <h2 className="text-base text-primary">{children}</h2>
   )
 }
