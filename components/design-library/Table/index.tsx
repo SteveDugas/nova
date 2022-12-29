@@ -8,11 +8,11 @@ import {
   useTableState
 } from 'react-stately';
 import {useRef} from 'react';
-import TableRowGroup from '../../TransactionsTable/TableRowGroup';
-import TableHeaderRow from '../../TransactionsTable/TableHeaderRow';
-import TableColumnHeader from '../../TransactionsTable/TableColumnHeader';
-import TableRow from '../../TransactionsTable/TableRow';
-import TableCell from '../../TransactionsTable/TableCell';
+import TableRowGroup from './TableRowGroup';
+import TableHeaderRow from './TableHeaderRow';
+import TableColumnHeader from './TableColumnHeader';
+import TableRow from './TableRow';
+import TableCell from './TableCell';
 
 export default function Table(props: any) {
   let { selectionMode, selectionBehavior } = props;
@@ -27,7 +27,7 @@ export default function Table(props: any) {
   let { gridProps } = useTable(props, state, ref);
 
   return (
-    <table {...gridProps} ref={ref} style={{ borderCollapse: 'collapse' }}>
+    <table {...gridProps} ref={ref} style={{ borderCollapse: 'collapse', width: '100%' }}>
       <TableRowGroup
         type="thead"
         style={{

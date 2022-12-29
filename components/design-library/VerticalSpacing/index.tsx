@@ -1,6 +1,6 @@
 export enum VerticalSpacingSize {
-  SMALL = 'mb-1',
-  MEDIUM = 'mb-3',
+  SMALL = 'pb-1',
+  MEDIUM = 'pb-3',
 }
 
 interface Props {

@@ -17,7 +17,7 @@ interface FiltersState {
   page: number;
   pageSize?: number;
   reviewerName?: string;
-  statuses?: string[];
+  statuses: string[];
   recipientName?: string;
 }
 
@@ -30,11 +30,34 @@ const DEFAULT_FILTERS_STATE = {
 }
 
 function filtersReducer(state: FiltersState, action: FilterAction) {
+  console.log("reducer");
   switch(action.type) {
     case FilterActions.updateRecipientName: {
       return {
         ...state,
         recipientName: action.payload,
+      }
+    }
+    case FilterActions.updateReviewerName: {
+      return {
+        ...state,
+        reviewerName: action.payload,
+      }
+    }
+    case FilterActions.addStatus: {
+      const statuses = Array.from(state.statuses);
+      statuses.push(action.payload);
+
+      return {
+        ...state,
+        statuses,
+      }
+    }
+    case FilterActions.removeStatus: {
+      const statuses = state.statuses.filter((state) => state !== action.payload);
+      return {
+        ...state,
+        statuses,
       }
     }
     default:
@@ -51,7 +74,7 @@ export default function Transactions() {
         <Heading>Transactions</Heading>
         <SubHeading>Your business contracts, including fund subscriptions or applications.</SubHeading>
       </VerticalSpacing>
-      <FilterBar dispatch={dispatch} />
+      <FilterBar dispatch={dispatch} state={state} />
       <ClientOnly>
         <TransactionsTable filters={state} />
       </ClientOnly>

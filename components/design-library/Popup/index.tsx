@@ -11,13 +11,13 @@ export default function Popup({ children, open=false, onDismiss }: Props) {
 
   return (
     <>
-      <div className="absolute top-0 right-0">
+      <div className="absolute top-10 right-0 z-20">
         <div className={classnames("rounded-xl bg-white shadow-light p-5", extraClasses)}>
           {children}
         </div>
       </div>
       { open && 
-        <div className="w-full h-full fixed inset-0" onClick={onDismiss} />
+        <div className="w-full h-full fixed inset-0 z-10" onClick={onDismiss} />
       }
     </>
   )

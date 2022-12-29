@@ -14,7 +14,8 @@ export interface Transaction {
 
 export enum FilterActions {
   updateReviewerName,
-  updateStatuses,
+  addStatus,
+  removeStatus,
   updateRecipientName,
   updatePage,
 }
@@ -23,6 +24,6 @@ export interface FiltersState {
   page: number;
   pageSize?: number;
   reviewerName?: string;
-  statuses?: string[];
+  statuses: string[];
   recipientName?: string;
 }
