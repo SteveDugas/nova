@@ -26,6 +26,17 @@ function filterByReviewerName(data: Transaction[], reviewerName: string) {
   return data.filter((transaction) => transaction.reviewer_names?.includes(reviewerName));
 }
 
+function splitIntoPages(data: Transaction[], pageSize: number) {
+  return data.reduce((prev: any, current) => {
+    if (prev.at(-1).length < pageSize) {
+      prev.at(-1).push(current);
+    } else {
+      prev.push([current]);
+    }
+    return prev;
+  }, [[]])
+}
+
 interface GetTransactionsArgs {
   recipient_name: string;
   statuses: string[];
@@ -37,8 +48,9 @@ interface GetTransactionsArgs {
 export const resolvers = {
   Query: {
     getTransactions: async (_: any, args: GetTransactionsArgs) => {
-      console.log("args", args);
       const data = mockData;
+      const pageSize = args.page_size || 10;
+      const page = args.page || 1;
       let returnData: Transaction[] = data;
 
       if (args.recipient_name) {
@@ -50,6 +62,12 @@ export const resolvers = {
       if (args.reviewer_name) {
         returnData = filterByReviewerName(returnData, args.reviewer_name)
       }
+
+      if (returnData.length > pageSize) {
+        returnData = splitIntoPages(returnData, pageSize);
+        return returnData.at(page-1);
+      }
+
       return returnData;
     }
   },
