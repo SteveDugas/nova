@@ -16,5 +16,5 @@ export const typeDefs = gql`
   }
 
   type Query {
-    getTransactions: [Transaction]
+    getTransactions(statuses: [String], recipient_name: String, reviewer_name: String, page: Int, page_size: Int): [Transaction]
   }`

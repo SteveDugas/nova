@@ -1,13 +1,6 @@
-enum Status {
-  Created,
-  Invited,
-  Submitted,
-  InProgress,
-  Pending,
-  Completed,
-}
+import mockData from './mock';
 
-type Transaction = {
+export type Transaction = {
   id: string;
   created_at: number;
   sender_entity_handle: string;
@@ -15,35 +8,49 @@ type Transaction = {
   first_recipient_name?: string;
   first_recipient_email?: string;
   first_recipient_completed_at?: number;
-  state: Status;
+  state: string;
   progress: number;
   latest_state_change_at: number;
   reviewer_names?: string[];
 }
 
+function filterByStatuses(data: Transaction[], statuses: string[]) {
+  return data.filter((transaction) => statuses.includes(transaction.state));
+}
 
+function filterByRecipientName(data: Transaction[], recipientName: string) {
+  return data.filter((transaction) => transaction.first_recipient_name?.toLowerCase() === recipientName.toLowerCase());
+}
 
-const mockData: [Transaction] = [
-  {
-    id: '9fa83b-234haf-2h4539',
-    created_at: 1672278978745,
-    sender_entity_handle: 'pnta-earlystage2',
-    template_name: 'Pantera Early Stage Token Template',
-    first_recipient_name: 'Pradyuman Vig',
-    first_recipient_email: 'pradyuman@novahq.com',
-    first_recipient_completed_at: 1672278978745,
-    state: Status.Created,
-    progress: 1,
-    latest_state_change_at: 1672278978745,
-    reviewer_names: ['Pradyuman Vig']
-  }
-]
+function filterByReviewerName(data: Transaction[], reviewerName: string) {
+  return data.filter((transaction) => transaction.reviewer_names?.includes(reviewerName));
+}
 
+interface GetTransactionsArgs {
+  recipient_name: string;
+  statuses: string[];
+  reviewer_name: string;
+  page: number;
+  page_size: number;
+}
 
 export const resolvers = {
   Query: {
-    getTransactions: async (_, args) => {
-      return mockData;
+    getTransactions: async (_: any, args: GetTransactionsArgs) => {
+      console.log("args", args);
+      const data = mockData;
+      let returnData: Transaction[] = data;
+
+      if (args.recipient_name) {
+        returnData = filterByRecipientName(returnData, args.recipient_name)
+      }
+      if (args.statuses) {
+        returnData = filterByStatuses(returnData, args.statuses || [])
+      }
+      if (args.reviewer_name) {
+        returnData = filterByReviewerName(returnData, args.reviewer_name)
+      }
+      return returnData;
     }
   },
 };
