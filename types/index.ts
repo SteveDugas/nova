@@ -18,3 +18,11 @@ export enum FilterActions {
   updateRecipientName,
   updatePage,
 }
+
+export interface FiltersState {
+  page: number;
+  pageSize?: number;
+  reviewerName?: string;
+  statuses?: string[];
+  recipientName?: string;
+}
