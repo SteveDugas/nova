@@ -9,12 +9,11 @@ interface Props {
 }
 
 export default function VarticalSpacing({ children, size=VerticalSpacingSize.MEDIUM }: Props) {
-
   return (
     <div>
-      {children.map((child) => {
+      {children.map((child, idx) => {
         return (
-          <div className={size}>{child}</div>
+          <div key={idx} className={size}>{child}</div>
         )
       })}
     </div>

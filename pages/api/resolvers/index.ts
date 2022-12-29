@@ -1,20 +1,7 @@
 import mockData from './mock';
+import { Transaction } from '../../../types';
 
 const DEFAULT_PAGE_SIZE = 10;
-
-export interface Transaction {
-  id: string;
-  created_at: number;
-  sender_entity_handle: string;
-  template_name: string;
-  first_recipient_name?: string;
-  first_recipient_email?: string;
-  first_recipient_completed_at?: number;
-  state: string;
-  progress: number;
-  latest_state_change_at: number;
-  reviewer_names?: string[];
-}
 
 interface GetTransactionsArgs {
   recipient_name: string;
@@ -35,7 +22,7 @@ function filterByStatuses(data: Transaction[], statuses: string[]) {
 }
 
 function filterByRecipientName(data: Transaction[], recipientName: string) {
-  return data.filter((transaction) => transaction.first_recipient_name?.toLowerCase() === recipientName.toLowerCase());
+  return data.filter((transaction) => transaction.first_recipient_name?.toLowerCase().includes(recipientName.toLowerCase()));
 }
 
 function filterByReviewerName(data: Transaction[], reviewerName: string) {
@@ -61,13 +48,13 @@ export const resolvers = {
       const page = args.page || 1;
       let returnTransactions: Transaction[] = data;
 
-      if (args.recipient_name) {
+      if (args.recipient_name?.length) {
         returnTransactions = filterByRecipientName(returnTransactions, args.recipient_name)
       }
-      if (args.statuses) {
+      if (args.statuses?.length) {
         returnTransactions = filterByStatuses(returnTransactions, args.statuses)
       }
-      if (args.reviewer_name) {
+      if (args.reviewer_name?.length) {
         returnTransactions = filterByReviewerName(returnTransactions, args.reviewer_name)
       }
 

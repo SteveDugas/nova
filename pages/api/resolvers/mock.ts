@@ -1,4 +1,4 @@
-import { Transaction } from './index';
+import { Transaction } from '../../../types';
 
 const mockData: Transaction[] = [
   {

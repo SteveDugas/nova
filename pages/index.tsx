@@ -1,14 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import Page from '../components/design-library/Page';
-import VerticalSpacing, { VerticalSpacingSize } from '../components/design-library/VerticalSpacing';
-import Heading from '../components/design-library/Heading';
-import SubHeading from '../components/design-library/SubHeading';
-import FilterBar from '../components/FilterBar/FilterBar';
-import { Inter } from '@next/font/google'
-import styles from '../styles/Home.module.css'
-
-const inter = Inter({ subsets: ['latin'] })
+import Transactions from '../components/Transactions';
 
 export default function Home() {
   return (
@@ -20,13 +13,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Page>
-        <VerticalSpacing>
-          <VerticalSpacing size={VerticalSpacingSize.SMALL}>
-            <Heading>Transactions</Heading>
-            <SubHeading>Your business contracts, including fund subscriptions or applications.</SubHeading>
-          </VerticalSpacing>
-          <FilterBar />
-        </VerticalSpacing>
+        <Transactions />
       </Page>
     </>
   )
