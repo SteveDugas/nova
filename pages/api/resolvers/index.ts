@@ -1,6 +1,6 @@
 import mockData from './mock';
 
-const DEFAULT_PAGE_SIZE = 2;
+const DEFAULT_PAGE_SIZE = 10;
 
 export interface Transaction {
   id: string;
