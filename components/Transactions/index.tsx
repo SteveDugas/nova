@@ -8,6 +8,7 @@ import TransactionsTable from '../../components/TransactionsTable';
 import { FilterActions, FiltersState } from '../../types';
 
 
+
 interface FilterAction {
   type: FilterActions;
   payload: any;
@@ -19,6 +20,7 @@ const DEFAULT_FILTERS_STATE = {
   reviewerName: '',
   statuses: [],
   recipientName: '',
+  totalTransactions: 0,
 }
 
 function filtersReducer(state: FiltersState, action: FilterAction) {
@@ -52,6 +54,12 @@ function filtersReducer(state: FiltersState, action: FilterAction) {
         statuses,
       }
     }
+    case FilterActions.updatePage: {
+      return {
+        ...state,
+        page: action.payload,
+      }
+    }
     default:
       return state;
   }
@@ -68,7 +76,7 @@ export default function Transactions() {
       </VerticalSpacing>
       <FilterBar dispatch={dispatch} state={state} />
       <ClientOnly>
-        <TransactionsTable filters={state} />
+        <TransactionsTable state={state} dispatch={dispatch} />
       </ClientOnly>
     </VerticalSpacing>
   )

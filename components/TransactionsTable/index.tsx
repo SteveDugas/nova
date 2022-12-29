@@ -1,5 +1,5 @@
 import { useQuery, gql } from "@apollo/client";
-import { Transaction, FiltersState } from '../../types';
+import { Transaction, FiltersState, FilterActions } from '../../types';
 import {
   Cell,
   Column,
@@ -9,6 +9,7 @@ import {
   useTableState
 } from 'react-stately';
 import Table from '../design-library/Table';
+import Paging from '../design-library/Paging';
 
 const QUERY = gql`
 query GetTransactions($page: Int, $pageSize: Int, $reviewerName: String, $statuses: [String], $recipientName: String) {
@@ -33,13 +34,14 @@ query GetTransactions($page: Int, $pageSize: Int, $reviewerName: String, $status
 `;
 
 interface Props {
-  filters: FiltersState;
+  state: FiltersState;
+  dispatch: React.Dispatch<any>;
 }
 
-export default function TransactionsTable({ filters }: Props) {
+export default function TransactionsTable({ state, dispatch }: Props) {
   const { data, loading, error } = useQuery(QUERY,
     { 
-      variables: filters
+      variables: state
     }
   );
 
@@ -47,7 +49,7 @@ export default function TransactionsTable({ filters }: Props) {
     return null;
   }
 
-  const { transactions } = data.getTransactions;
+  const { transactions, total, page_size } = data.getTransactions;
 
   return (
     <div>
@@ -92,6 +94,12 @@ export default function TransactionsTable({ filters }: Props) {
           })}
         </TableBody>
       </Table>
+      <Paging totalPages={Math.ceil(total/state.pageSize)} handleChangePage={(pageNum: number) => {
+        dispatch({
+          type: FilterActions.updatePage,
+          payload: pageNum,
+        });
+      }} />
     </div>
   )
 }

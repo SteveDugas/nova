@@ -33,7 +33,7 @@ export type State = keyof typeof STATUS_COLOR_MAP;
 
 export interface FiltersState {
   page: number;
-  pageSize?: number;
+  pageSize: number;
   reviewerName: string;
   statuses: State[];
   recipientName: string;
