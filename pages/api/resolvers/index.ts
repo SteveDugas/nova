@@ -1,6 +1,8 @@
 import mockData from './mock';
 
-export type Transaction = {
+const DEFAULT_PAGE_SIZE = 2;
+
+export interface Transaction {
   id: string;
   created_at: number;
   sender_entity_handle: string;
@@ -12,6 +14,20 @@ export type Transaction = {
   progress: number;
   latest_state_change_at: number;
   reviewer_names?: string[];
+}
+
+interface GetTransactionsArgs {
+  recipient_name: string;
+  statuses: string[];
+  reviewer_name: string;
+  page: number;
+  page_size: number;
+}
+
+interface ReturnData {
+  transactions: Transaction[];
+  page: number;
+  page_size: number;
 }
 
 function filterByStatuses(data: Transaction[], statuses: string[]) {
@@ -37,38 +53,34 @@ function splitIntoPages(data: Transaction[], pageSize: number) {
   }, [[]])
 }
 
-interface GetTransactionsArgs {
-  recipient_name: string;
-  statuses: string[];
-  reviewer_name: string;
-  page: number;
-  page_size: number;
-}
-
 export const resolvers = {
   Query: {
     getTransactions: async (_: any, args: GetTransactionsArgs) => {
       const data = mockData;
-      const pageSize = args.page_size || 10;
+      const pageSize = args.page_size || DEFAULT_PAGE_SIZE;
       const page = args.page || 1;
-      let returnData: Transaction[] = data;
+      let returnTransactions: Transaction[] = data;
 
       if (args.recipient_name) {
-        returnData = filterByRecipientName(returnData, args.recipient_name)
+        returnTransactions = filterByRecipientName(returnTransactions, args.recipient_name)
       }
       if (args.statuses) {
-        returnData = filterByStatuses(returnData, args.statuses || [])
+        returnTransactions = filterByStatuses(returnTransactions, args.statuses)
       }
       if (args.reviewer_name) {
-        returnData = filterByReviewerName(returnData, args.reviewer_name)
+        returnTransactions = filterByReviewerName(returnTransactions, args.reviewer_name)
       }
 
-      if (returnData.length > pageSize) {
-        returnData = splitIntoPages(returnData, pageSize);
-        return returnData.at(page-1);
+      if (returnTransactions.length > pageSize) {
+        returnTransactions = splitIntoPages(returnTransactions, pageSize).at(page-1);
       }
 
-      return returnData;
+      return {
+        page,
+        page_size: pageSize,
+        transactions: returnTransactions,
+        total: data.length,
+      };
     }
   },
 };
