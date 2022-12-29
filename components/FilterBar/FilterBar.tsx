@@ -3,7 +3,7 @@ import FilterBarSearch from './Search';
 import FilterBarActiveFilters from './ActiveFilters';
 import FilterBarControls from './Controls';
 import FilterBarDivider from './Divider';
-import { FilterActions, FiltersState } from '../../types';
+import { FilterActions, FiltersState, State } from '../../types';
 
 interface FilterBarProps {
   dispatch: React.Dispatch<any>;
@@ -11,39 +11,49 @@ interface FilterBarProps {
 }
 
 export default function FilterBar({ dispatch, state }: FilterBarProps) {
+  function updateReviewerName(reviewerName: string) {
+    dispatch({
+      type: FilterActions.updateReviewerName,
+      payload: reviewerName,
+    })
+  }
+
+  function updateStatus(status: State) {
+    if (state.statuses?.includes(status)) {
+      dispatch({
+        type: FilterActions.removeStatus,
+        payload: status,
+      })
+    } else {
+      dispatch({
+        type: FilterActions.addStatus,
+        payload: status,
+      })
+    }
+  }
+
+  function updateRecipient(name: string) {
+    dispatch({
+      type: FilterActions.updateRecipientName,
+      payload: name,
+    });
+  }
+
   return (
-    <div className="flex h-14 items-center">
-      <FilterBarSearch setRecipientName={(recipientName: string) => {
-        dispatch({
-          type: FilterActions.updateRecipientName,
-          payload: recipientName,
-        });
-      }} />
+    <div className="flex min-h-14 items-center">
+      <FilterBarSearch setRecipientName={updateRecipient} recipientName={state.recipientName} />
       <FilterBarDivider />
-      <FilterBarActiveFilters state={state} />
+      <FilterBarActiveFilters
+        setReviewerName={updateReviewerName}
+        setStatus={updateStatus}
+        setRecipientName={updateRecipient}
+        state={state}
+      />
       <FilterBarDivider />
       <FilterBarControls
-        setReviewer={(reviewerName: string) => {
-          dispatch({
-            type: FilterActions.updateReviewerName,
-            payload: reviewerName,
-          })
-        }}
-        setStatuses={(status: string) => {
-          console.log("setStatuses?")
-          if (state.statuses?.includes(status)) {
-            dispatch({
-              type: FilterActions.removeStatus,
-              payload: status,
-            })
-          } else {
-            dispatch({
-              type: FilterActions.addStatus,
-              payload: status,
-            })
-          }
-        }}
-        activeStates={state.statuses}
+        setReviewerName={updateReviewerName}
+        setStatuses={updateStatus}
+        state={state}
       />
     </div>
   )

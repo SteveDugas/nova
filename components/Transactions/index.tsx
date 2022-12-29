@@ -5,20 +5,12 @@ import SubHeading from '../../components/design-library/SubHeading';
 import FilterBar from '../../components/FilterBar/FilterBar';
 import ClientOnly from '../../components/ClientOnly';
 import TransactionsTable from '../../components/TransactionsTable';
-import { FilterActions } from '../../types';
+import { FilterActions, FiltersState } from '../../types';
 
 
 interface FilterAction {
   type: FilterActions;
   payload: any;
-}
-
-interface FiltersState {
-  page: number;
-  pageSize?: number;
-  reviewerName?: string;
-  statuses: string[];
-  recipientName?: string;
 }
 
 const DEFAULT_FILTERS_STATE = {

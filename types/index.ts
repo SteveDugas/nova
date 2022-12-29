@@ -12,6 +12,15 @@ export interface Transaction {
   reviewer_names?: string[];
 }
 
+export enum STATUS_COLOR_MAP {
+  'Created' = 'text-created',
+  'Invited' = 'text-invited',
+  'In Progress' = 'text-inprogress',
+  'Submitted' = 'text-submitted',
+  'Pending' = 'text-pending',
+  'Completed' = 'text-completed',
+}
+
 export enum FilterActions {
   updateReviewerName,
   addStatus,
@@ -20,10 +29,12 @@ export enum FilterActions {
   updatePage,
 }
 
+export type State = keyof typeof STATUS_COLOR_MAP;
+
 export interface FiltersState {
   page: number;
   pageSize?: number;
   reviewerName?: string;
-  statuses: string[];
+  statuses: State[];
   recipientName?: string;
 }
