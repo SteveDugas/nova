@@ -91,8 +91,10 @@ export default function TransactionsTable({ data, loading, fetchMore }: Props) {
       {!loading && transactions.length < 1 && (
         <div className="text-center text-xl">There are no transactions that match your filters. Try a different search.</div>
       )}
-      {!loading && 
+      {!loading && Math.ceil(total/page_size) > 1 ?
         <Paging currentPage={page-1} totalPages={Math.ceil(total/page_size)} handleChangePage={handlePageChange} />
+      :
+        <div className="p-4 border-t border-tableBorder"/>
       }
     </div>
   )
