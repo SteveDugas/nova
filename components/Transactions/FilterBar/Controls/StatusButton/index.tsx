@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { STATUS_COLOR_MAP } from '../../../../types';
+import { STATUS_COLOR_MAP } from '../../../../../types';
 
 type State = keyof typeof STATUS_COLOR_MAP;
 

@@ -1,9 +1,9 @@
 import React from 'react';
-import Popup from '../../design-library/Popup';
+import Popup from '../../../design-library/Popup';
 import StatusButton from './StatusButton';
-import VerticalSpacingSize from '../../design-library/VerticalSpacing';
-import { Select, Option } from '../../design-library/Select';
-import { State, FiltersState } from '../../../types';
+import VerticalSpacingSize from '../../../design-library/VerticalSpacing';
+import { Select, Option } from '../../../design-library/Select';
+import { State, FiltersState } from '../../../../types';
 
 interface Props {
   setReviewerName: (reviewerName: string) => void;

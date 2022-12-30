@@ -2,7 +2,7 @@ import React from 'react';
 import TimeAgo from 'javascript-time-ago';
 import ReactTimeAgo from 'react-time-ago';
 import en from 'javascript-time-ago/locale/en.json';
-import { Transaction, GetTransactionsResponse, STATUS_COLOR_MAP } from '../../types';
+import { Transaction, GetTransactionsResponse, STATUS_COLOR_MAP } from '../../../types';
 import {
   Cell,
   Column,
@@ -11,9 +11,9 @@ import {
   TableHeader,
 } from 'react-stately';
 import classnames from 'classnames';
-import Table from '../design-library/Table';
-import Paging from '../design-library/Paging';
-import ColorPill from "./ColorPill";
+import Table from '../../design-library/Table';
+import Paging from '../../design-library/Paging';
+import ColorPill from "../../TransactionsTable/ColorPill";
 
 TimeAgo.addDefaultLocale(en);
 

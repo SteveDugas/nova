@@ -3,7 +3,7 @@ import FilterBarSearch from './Search';
 import FilterBarActiveFilters from './ActiveFilters';
 import FilterBarControls from './Controls';
 import FilterBarDivider from './Divider';
-import { FilterActions, FiltersState, State, GetTransactionsResponse } from '../../types';
+import { FilterActions, FiltersState, State, GetTransactionsResponse } from '../../../types';
 
 interface FilterBarProps {
   dispatch: React.Dispatch<any>;

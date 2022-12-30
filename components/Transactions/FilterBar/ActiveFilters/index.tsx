@@ -1,7 +1,7 @@
 import classnames from 'classnames';
-import { FiltersState } from '../../../types';
-import Pill from '../../design-library/Pill';
-import { STATUS_COLOR_MAP, State } from '../../../types';
+import { FiltersState } from '../../../../types';
+import Pill from '../../../design-library/Pill';
+import { STATUS_COLOR_MAP, State } from '../../../../types';
 
 interface Props {
   filtersState: FiltersState;

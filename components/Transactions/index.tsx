@@ -3,8 +3,8 @@ import { useQuery, gql } from "@apollo/client";
 import VerticalSpacing, { VerticalSpacingSize } from '../../components/design-library/VerticalSpacing';
 import Heading from '../../components/design-library/Heading';
 import SubHeading from '../../components/design-library/SubHeading';
-import FilterBar from '../../components/FilterBar/FilterBar';
-import TransactionsTable from '../../components/TransactionsTable';
+import FilterBar from './FilterBar/FilterBar';
+import TransactionsTable from './TransactionsTable';
 import reducer, { DEFAULT_FILTERS_STATE } from './reducer';
 
 const QUERY = gql`
