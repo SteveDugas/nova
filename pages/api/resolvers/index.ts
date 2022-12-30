@@ -58,6 +58,8 @@ export const resolvers = {
         returnTransactions = filterByReviewerName(returnTransactions, args.reviewer_name)
       }
 
+      const total = returnTransactions.length;
+
       if (returnTransactions.length > pageSize) {
         returnTransactions = splitIntoPages(returnTransactions, pageSize).at(page-1);
       }
@@ -66,7 +68,7 @@ export const resolvers = {
         page,
         page_size: pageSize,
         transactions: returnTransactions,
-        total: data.length,
+        total,
       };
     }
   },

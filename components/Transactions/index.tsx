@@ -15,7 +15,7 @@ interface FilterAction {
 }
 
 const DEFAULT_FILTERS_STATE = {
-  pageSize: 3,
+  pageSize: 6,
   page: 1,
   reviewerName: '',
   statuses: [],
