@@ -34,7 +34,7 @@ export default function FilterBarActiveFilters({ filtersState, setReviewerName, 
             <div className="mr-2 mb-1">
               <Pill
                 name="Recipient"
-                value={<span>{filtersState.recipientName}</span>}
+                value={<span className="text-created">{filtersState.recipientName}</span>}
                 onDismiss={() => setRecipientName('') }
                 dismissable
               />
@@ -44,7 +44,7 @@ export default function FilterBarActiveFilters({ filtersState, setReviewerName, 
             <div className="mr-2 mb-1">
               <Pill
                 name="Reviewer"
-                value={<span>{filtersState.reviewerName}</span>}
+                value={<span className="text-created">{filtersState.reviewerName}</span>}
                 onDismiss={() => setReviewerName('') }
                 dismissable
               />
