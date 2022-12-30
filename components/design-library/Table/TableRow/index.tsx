@@ -1,19 +1,21 @@
 import React from 'react';
-import { useTableRow, useFocusRing, mergeProps } from 'react-aria';
+import { useTableRow, useFocusRing, mergeProps, GridRowProps } from 'react-aria';
+import { TableState } from "@react-stately/table";
+import { GridNode } from "@react-types/grid";
+import { Direction, KeyboardDelegate, Node, Collection, AriaLabelingProps, DOMAttributes, DOMProps, FocusableElement } from "@react-types/shared";
 
 interface Props {
-  item: any,
+  item: GridNode<object>,
   children: JSX.Element[];
-  state: any;
+  state: TableState<object>;
 }
 
 export default function TableRow({ item, children, state }: Props) {
   let ref = React.useRef(null);
   let isSelected = state.selectionManager.isSelected(item.key);
+  const tableRowProps: GridRowProps<object> = { node: item };
   let { rowProps, isPressed } = useTableRow(
-    {
-      node: item
-    },
+    tableRowProps,
     state,
     ref
   );
@@ -24,7 +26,7 @@ export default function TableRow({ item, children, state }: Props) {
       style={{
         background: isSelected ? 'blueviolet' : isPressed
           ? 'var(--spectrum-global-color-gray-400)'
-          : item.index % 2
+          : item?.index && item.index % 2
           ? 'var(--spectrum-alias-highlight-hover)'
           : 'none',
         color: isSelected ? 'white' : undefined,

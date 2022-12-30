@@ -1,12 +1,9 @@
-import { mergeProps, useFocusRing, useTable } from 'react-aria';
+import { useTable, AriaTableProps } from 'react-aria';
 import {
-  Cell,
-  Column,
-  Row,
-  TableBody,
-  TableHeader,
-  useTableState
+  useTableState,
+  TableStateProps,
 } from 'react-stately';
+// import { AriaTableProps } from '@react-aria/table';
 import {useRef} from 'react';
 import TableRowGroup from './TableRowGroup';
 import TableHeaderRow from './TableHeaderRow';
@@ -14,14 +11,18 @@ import TableColumnHeader from './TableColumnHeader';
 import TableRow from './TableRow';
 import TableCell from './TableCell';
 
-export default function Table(props: any) {
+interface TableProps extends TableStateProps<object>, AriaTableProps<object> {
+  style: React.CSSProperties;
+}
+
+export default function Table(props: TableProps) {
   let { selectionMode, selectionBehavior } = props;
-  let state = useTableState({
+  const tableStateProps = {
     ...props,
     showSelectionCheckboxes: selectionMode === 'multiple' &&
       selectionBehavior !== 'replace'
-  });
-
+  }
+  let state = useTableState(tableStateProps);
   let ref = useRef(null);
   let { collection } = state;
   let { gridProps } = useTable(props, state, ref);

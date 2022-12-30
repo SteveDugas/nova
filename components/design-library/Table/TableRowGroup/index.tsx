@@ -1,8 +1,8 @@
 import {useTableRowGroup} from 'react-aria';
 
 interface Props {
-  type: any;
-  style?: any;
+  type: keyof JSX.IntrinsicElements;
+  style?: React.CSSProperties;
   children: JSX.Element[];
 }
 

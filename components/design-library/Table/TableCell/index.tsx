@@ -1,14 +1,19 @@
 import React from 'react';
-import { mergeProps, useFocusRing, useTableCell } from 'react-aria';
+import { GridNode } from "@react-types/grid";
+import { TableState } from "@react-stately/table";
+import { mergeProps, useFocusRing, useTableCell, AriaTableCellProps } from 'react-aria';
 
 interface Props {
-  cell: any;
-  state: any;
+  cell: GridNode<object>;
+  state: TableState<object>;
 }
 
 export default function TableCell({ cell, state }: Props) {
   let ref = React.useRef(null);
-  let { gridCellProps } = useTableCell({ node: cell }, state, ref);
+  const tableCellProps: AriaTableCellProps = {
+    node: cell
+  };
+  let { gridCellProps } = useTableCell(tableCellProps, state, ref);
   let { isFocusVisible, focusProps } = useFocusRing();
 
   return (
