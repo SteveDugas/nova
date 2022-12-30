@@ -20,6 +20,7 @@ export const typeDefs = gql`
     page: Int!,
     page_size: Int!,
     total: Int!,
+    reviewersList: [String],
   }
 
   type Query {

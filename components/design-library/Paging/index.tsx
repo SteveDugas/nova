@@ -8,7 +8,6 @@ interface Props {
 
 export default function Paging({ totalPages, handleChangePage, currentPage }: Props) {
   function handlePageClick(event: any) {
-    console.log("Page num", event.selected);
     handleChangePage(event.selected + 1);
   }
 

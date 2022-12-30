@@ -9,11 +9,14 @@ interface Props {
   setReviewerName: (reviewerName: string) => void;
   setStatuses: (state: State) => void;
   state: FiltersState;
+  reviewersList: string[];
 }
 
-export default function FilterBarControls({ setReviewerName, setStatuses, state }: Props) {
+export default function FilterBarControls({ setReviewerName, setStatuses, state, reviewersList }: Props) {
   const [popupIsOpen, setPopupIsOpen] = React.useState(false);
   const activeStates = state.statuses;
+  const reviewersOptions = ["", ...reviewersList];
+  const SELECT_DEFAULT = "Search by name...";
 
   return (
     <div className="relative">
@@ -39,11 +42,12 @@ export default function FilterBarControls({ setReviewerName, setStatuses, state 
             <VerticalSpacingSize>
               <div className="font-medium">Reviewer</div>
               <Select value={state.reviewerName || ''} onChange={(reviewer) => { setReviewerName(reviewer) }}>
-                <Option value="">Select a Reviewer</Option>
-                <Option value="Random Person 1">Random Person 1</Option>
-                <Option value="Random Person 2">Random Person 2</Option>
-                <Option value="Steve Dugas">Steve Dugas</Option>
-                <Option value="Pradyuman Vig">Pradyuman Vig</Option>
+                {
+                  reviewersOptions.map((name) => {
+                    const reviewer = name || SELECT_DEFAULT;
+                    return (<Option key={reviewer} value={name}>{reviewer}</Option>)
+                  })
+                }
               </Select>
             </VerticalSpacingSize>
           </VerticalSpacingSize>

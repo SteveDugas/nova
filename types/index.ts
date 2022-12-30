@@ -3,6 +3,7 @@ export enum FilterActions {
   removeStatus,
   updateReviewerName,
   updateRecipientName,
+  updateReviewersList,
 }
 
 export type State = keyof typeof STATUS_COLOR_MAP;
@@ -19,6 +20,14 @@ export interface Transaction {
   progress: number;
   latest_state_change_at: number;
   reviewer_names?: string[];
+}
+
+export interface GetTransactionsResponse {
+  reviewersList: string[];
+  transactions: Transaction[];
+  page: number;
+  page_size: number;
+  total: number;
 }
 
 export enum STATUS_COLOR_MAP {

@@ -1,7 +1,7 @@
 import Option from './Option';
 
 interface Props {
-  children: JSX.Element[];
+  children: any;
   onChange: (value: string) => void;
   value: string;
 }

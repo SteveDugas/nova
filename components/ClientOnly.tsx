@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 interface Props {
   children: JSX.Element | JSX.Element[];
-  className: string;
+  className?: string;
 }
 
 export default function ClientOnly({ children, ...delegated }: Props) {

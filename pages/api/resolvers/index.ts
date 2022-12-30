@@ -39,7 +39,7 @@ function splitIntoPages(data: Transaction[], pageSize: number) {
     return prev;
   }, [[]])
 }
-// TODO: maybe turn off caching
+
 export const resolvers = {
   Query: {
     getTransactions: async (_: any, args: GetTransactionsArgs) => {
@@ -47,6 +47,17 @@ export const resolvers = {
       const pageSize = args.page_size || DEFAULT_PAGE_SIZE;
       let page = args.page || 1;
       let returnTransactions: Transaction[] = data;
+
+      const possibleReviewers = data.reduce((prev: string[], current) => {
+        if (current.reviewer_names) {
+          current.reviewer_names.forEach((name) => {
+            if (!prev.includes(name)) {
+              prev.push(name)
+            }
+          })
+        }
+        return prev;
+      }, [])
 
       if (args.recipient_name?.length) {
         returnTransactions = filterByRecipientName(returnTransactions, args.recipient_name)
@@ -76,6 +87,7 @@ export const resolvers = {
         page,
         page_size: pageSize,
         transactions: returnTransactions,
+        reviewersList: possibleReviewers,
         total,
       };
     }

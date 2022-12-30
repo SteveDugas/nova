@@ -3,14 +3,16 @@ import FilterBarSearch from './Search';
 import FilterBarActiveFilters from './ActiveFilters';
 import FilterBarControls from './Controls';
 import FilterBarDivider from './Divider';
-import { FilterActions, FiltersState, State } from '../../types';
+import { FilterActions, FiltersState, State, GetTransactionsResponse } from '../../types';
 
 interface FilterBarProps {
   dispatch: React.Dispatch<any>;
   state: FiltersState;
+  loading: boolean;
+  data: GetTransactionsResponse;
 }
 
-export default function FilterBar({ dispatch, state }: FilterBarProps) {
+export default function FilterBar({ dispatch, state, data, loading }: FilterBarProps) {
   function updateReviewerName(reviewerName: string) {
     dispatch({
       type: FilterActions.updateReviewerName,
@@ -50,11 +52,14 @@ export default function FilterBar({ dispatch, state }: FilterBarProps) {
         state={state}
       />
       <FilterBarDivider />
-      <FilterBarControls
-        setReviewerName={updateReviewerName}
-        setStatuses={updateStatus}
-        state={state}
-      />
+      { !loading && 
+        <FilterBarControls
+          setReviewerName={updateReviewerName}
+          setStatuses={updateStatus}
+          state={state}
+          reviewersList={data.reviewersList || []}
+        />
+      }
     </div>
   )
 }

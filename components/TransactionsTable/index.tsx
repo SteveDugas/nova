@@ -1,9 +1,8 @@
 import React from 'react';
-import { useQuery, gql } from "@apollo/client";
 import TimeAgo from 'javascript-time-ago';
 import ReactTimeAgo from 'react-time-ago';
 import en from 'javascript-time-ago/locale/en.json';
-import { Transaction, FiltersState, FilterActions } from '../../types';
+import { Transaction, GetTransactionsResponse, STATUS_COLOR_MAP } from '../../types';
 import {
   Cell,
   Column,
@@ -16,55 +15,17 @@ import classnames from 'classnames';
 import Table from '../design-library/Table';
 import Paging from '../design-library/Paging';
 import ColorPill from "./ColorPill";
-import { STATUS_COLOR_MAP } from "../../types";
 
 TimeAgo.addDefaultLocale(en);
 
-// TODO: Only have the table body in ClientOnly so there's no flicker
-
-const QUERY = gql`
-query GetTransactions($page: Int, $pageSize: Int, $reviewerName: String, $statuses: [String], $recipientName: String) {
-  getTransactions(page: $page, page_size: $pageSize, reviewer_name: $reviewerName, statuses: $statuses, recipient_name: $recipientName) {
-    transactions {
-      id,
-      latest_state_change_at,
-      reviewer_names,
-      progress,
-      state,
-      first_recipient_name,
-      first_recipient_email,
-      first_recipient_completed_at,
-      sender_entity_handle,
-      template_name,
-      state,
-    }
-    page
-    page_size
-    total
-  }
-}
-`;
-
 interface Props {
-  state: FiltersState;
+  fetchMore: (variablesObj: any) => void;
+  loading: boolean;
+  data: GetTransactionsResponse;
 }
 
-export default function TransactionsTable({ state }: Props) {
-  const { data, loading, error, fetchMore } = useQuery(QUERY,
-    { 
-      variables: {
-        ...state,
-        page: 1,
-        pageSize: 6,
-      }
-    }
-  );
-
-  if (loading) {
-    return null;
-  }
-
-  const { transactions, total, page_size, page } = data.getTransactions;
+export default function TransactionsTable({ data, loading, fetchMore }: Props) {
+  const { transactions, total, page, page_size, reviewersList } = data;
 
   return (
     <div className="bg-white rounded-xl shadow-light h-full max-h-[600px] flex flex-col justify-between text-sm">
@@ -100,9 +61,10 @@ export default function TransactionsTable({ state }: Props) {
                   <div>{transaction.sender_entity_handle}</div>
                 </Cell>
                 <Cell>
-                  {transaction.reviewer_names?.map((name, idx) => {
+                  {transaction.reviewer_names?.map((name) => {
+                    const reviewerColor = reviewersList.indexOf(name) || 0;
                     return (
-                      <ColorPill key={name} className="mr-2" index={idx}>{name}</ColorPill>
+                      <ColorPill key={name} className="mr-2" index={reviewerColor}>{name}</ColorPill>
                     )
                   })}
                 </Cell>
@@ -114,16 +76,21 @@ export default function TransactionsTable({ state }: Props) {
           })}
         </TableBody>
       </Table>
-      { transactions.length < 1 && (
+      { loading && (
+        <div className="text-center text-xl">Loading</div>
+      )}
+      {!loading && transactions.length < 1 && (
         <div className="text-center text-xl">There are no transactions that match your filters. Try a different search.</div>
       )}
-      <Paging currentPage={page-1} totalPages={Math.ceil(total/page_size)} handleChangePage={(pageNum: number) => {
-        fetchMore({
-          variables: {
-            page: pageNum,
-          }
-        })
-      }} />
+      {!loading && 
+        <Paging currentPage={page-1} totalPages={Math.ceil(total/page_size)} handleChangePage={(pageNum: number) => {
+          fetchMore({
+            variables: {
+              page: pageNum,
+            }
+          })
+        }} />
+      }
     </div>
   )
 }

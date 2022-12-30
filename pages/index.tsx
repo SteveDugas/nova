@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Page from '../components/design-library/Page';
 import Transactions from '../components/Transactions';
+import ClientOnly from '../components/ClientOnly';
 
 export default function Home() {
   return (
@@ -12,9 +13,11 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Page>
-        <Transactions />
-      </Page>
+      <ClientOnly className="h-full">
+        <Page>
+          <Transactions />
+        </Page>
+      </ClientOnly>
     </>
   )
 }
