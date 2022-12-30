@@ -8,11 +8,10 @@ import { FilterActions, FiltersState, State, GetTransactionsResponse } from '../
 interface FilterBarProps {
   dispatch: React.Dispatch<any>;
   state: FiltersState;
-  loading: boolean;
   data: GetTransactionsResponse;
 }
 
-export default function FilterBar({ dispatch, state, data, loading }: FilterBarProps) {
+export default function FilterBar({ dispatch, state, data }: FilterBarProps) {
   function updateReviewerName(reviewerName: string) {
     dispatch({
       type: FilterActions.updateReviewerName,
@@ -52,14 +51,12 @@ export default function FilterBar({ dispatch, state, data, loading }: FilterBarP
         state={state}
       />
       <FilterBarDivider />
-      { !loading && 
-        <FilterBarControls
-          setReviewerName={updateReviewerName}
-          setStatuses={updateStatus}
-          state={state}
-          reviewersList={data.reviewersList || []}
-        />
-      }
+      <FilterBarControls
+        setReviewerName={updateReviewerName}
+        setStatuses={updateStatus}
+        state={state}
+        reviewersList={data.reviewersList || []}
+      />
     </div>
   )
 }

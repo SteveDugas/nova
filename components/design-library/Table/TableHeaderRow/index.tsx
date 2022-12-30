@@ -12,7 +12,7 @@ export default function TableHeaderRow({ item, state, children }: Props) {
   let { rowProps } = useTableHeaderRow({ node: item }, state, ref);
 
   return (
-    <tr {...rowProps} ref={ref}>
+    <tr {...rowProps} ref={ref} className="border-b border-tableBorder">
       {children}
     </tr>
   );

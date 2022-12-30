@@ -16,6 +16,7 @@ let COLORS = [
 export default function ColorPill({ children, className='', index=0 }: Props) {
   const colorIndex = (index+1)%COLORS.length;
   const color = COLORS[colorIndex];
+
   return (
     <div className={classnames("rounded-full bg-white inline-block px-4 py-1 font-medium", color, className)}>{children}</div>
   )

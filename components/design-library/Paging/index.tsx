@@ -12,7 +12,7 @@ export default function Paging({ totalPages, handleChangePage, currentPage }: Pr
   }
 
   return (
-    <div data-component="paging" className="p-4">
+    <div data-component="paging" className="p-4 border-t border-tableBorder">
       <ReactPaginate
         breakLabel="..."
         nextLabel="Next"

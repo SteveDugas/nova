@@ -41,12 +41,6 @@ export default function filtersReducer(state: FiltersState, action: FilterAction
         reviewerName: action.payload,
       }
     }
-    case FilterActions.updateReviewersList: {
-      return {
-        ...state,
-        reviewersList: action.payload,
-      }
-    }
     default:
       return state;
   }

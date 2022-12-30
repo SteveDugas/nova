@@ -27,6 +27,14 @@ interface Props {
 export default function TransactionsTable({ data, loading, fetchMore }: Props) {
   const { transactions, total, page, page_size, reviewersList } = data;
 
+  function handlePageChange(pageNum: number) {
+    fetchMore({
+      variables: {
+        page: pageNum,
+      }
+    })
+  }
+
   return (
     <div className="bg-white rounded-xl shadow-light h-full max-h-[600px] flex flex-col justify-between text-sm">
       <Table
@@ -83,13 +91,7 @@ export default function TransactionsTable({ data, loading, fetchMore }: Props) {
         <div className="text-center text-xl">There are no transactions that match your filters. Try a different search.</div>
       )}
       {!loading && 
-        <Paging currentPage={page-1} totalPages={Math.ceil(total/page_size)} handleChangePage={(pageNum: number) => {
-          fetchMore({
-            variables: {
-              page: pageNum,
-            }
-          })
-        }} />
+        <Paging currentPage={page-1} totalPages={Math.ceil(total/page_size)} handleChangePage={handlePageChange} />
       }
     </div>
   )

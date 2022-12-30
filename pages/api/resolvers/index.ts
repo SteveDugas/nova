@@ -11,12 +11,6 @@ interface GetTransactionsArgs {
   page_size: number;
 }
 
-interface ReturnData {
-  transactions: Transaction[];
-  page: number;
-  page_size: number;
-}
-
 function filterByStatuses(data: Transaction[], statuses: string[]) {
   return data.filter((transaction) => statuses.includes(transaction.state));
 }
@@ -40,24 +34,27 @@ function splitIntoPages(data: Transaction[], pageSize: number) {
   }, [[]])
 }
 
+function extractReviewers(data: Transaction[]) {
+  return data.reduce((prev: string[], current) => {
+    if (current.reviewer_names) {
+      current.reviewer_names.forEach((name) => {
+        if (!prev.includes(name)) {
+          prev.push(name)
+        }
+      })
+    }
+    return prev;
+  }, [])
+}
+
 export const resolvers = {
   Query: {
     getTransactions: async (_: any, args: GetTransactionsArgs) => {
       const data = mockData;
       const pageSize = args.page_size || DEFAULT_PAGE_SIZE;
+      const possibleReviewers = extractReviewers(data);
       let page = args.page || 1;
       let returnTransactions: Transaction[] = data;
-
-      const possibleReviewers = data.reduce((prev: string[], current) => {
-        if (current.reviewer_names) {
-          current.reviewer_names.forEach((name) => {
-            if (!prev.includes(name)) {
-              prev.push(name)
-            }
-          })
-        }
-        return prev;
-      }, [])
 
       if (args.recipient_name?.length) {
         returnTransactions = filterByRecipientName(returnTransactions, args.recipient_name)
@@ -73,8 +70,10 @@ export const resolvers = {
 
       if (returnTransactions.length > pageSize) {
         const pages = splitIntoPages(returnTransactions, pageSize)
-        if (pages.at(page-1)) {
-          returnTransactions = pages.at(page-1);
+        const requestedPage = pages.at(page-1)
+
+        if (requestedPage) {
+          returnTransactions = requestedPage;
         } else {
           returnTransactions = pages.at(0);
           page = 1;

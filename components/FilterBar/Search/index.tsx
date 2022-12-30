@@ -1,12 +1,9 @@
-import { debounce } from 'lodash';
-
 interface Props {
   setRecipientName: (name: string) => void;
   recipientName: string;
 }
 
 export default function FilterBarSearch({ setRecipientName, recipientName }: Props) {
-
   function handleChange(name: string) {
     setRecipientName(name);
   }
@@ -17,7 +14,13 @@ export default function FilterBarSearch({ setRecipientName, recipientName }: Pro
         <div className="text-xs text-primary/30">Look up by</div>
         <div className="text-base">Customer name</div>
       </div>
-      <input value={recipientName} onChange={(e) => handleChange(e.target.value)} className="px-2 pl-4 bg-transparent outline-0 placeholder-primary/60 grow-1 max-h-14" type="text" placeholder="Start your search..." />
+      <input
+        value={recipientName}
+        onChange={(e) => handleChange(e.target.value)}
+        className="px-2 pl-4 bg-transparent outline-0 placeholder-primary/60 grow-1 max-h-14"
+        type="text"
+        placeholder="Start your search..."
+      />
     </div>
   )
 }

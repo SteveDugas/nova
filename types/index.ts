@@ -3,7 +3,6 @@ export enum FilterActions {
   removeStatus,
   updateReviewerName,
   updateRecipientName,
-  updateReviewersList,
 }
 
 export type State = keyof typeof STATUS_COLOR_MAP;

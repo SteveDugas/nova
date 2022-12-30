@@ -32,6 +32,7 @@ export default function TableRow({ item, children, state }: Props) {
       }}
       {...mergeProps(rowProps, focusProps)}
       ref={ref}
+      className="border-b border-tableBorder"
     >
       {children}
     </tr>

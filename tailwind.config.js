@@ -18,7 +18,7 @@ module.exports = {
         'submitted': '#2bbea8',
         'pending': '#f16b6b',
         'completed': 'rgba(144, 144, 144, 80%)',
-
+        'tableBorder': '#fafafa',
       },
       boxShadow: {
         light: '0px 0px 10px rgb(0 0 0 / 5%)'

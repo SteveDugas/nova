@@ -60,7 +60,7 @@ export default function Transactions() {
         </VerticalSpacing>
       </div>
       <div className="pb-4">
-        <FilterBar dispatch={dispatch} state={state} loading={loading} data={data?.getTransactions || defaultData} />
+        <FilterBar dispatch={dispatch} state={state} data={data?.getTransactions || defaultData} />
       </div>
       <div className="pb-3 grow">
         <TransactionsTable
