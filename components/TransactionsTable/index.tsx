@@ -52,6 +52,8 @@ export default function TransactionsTable({ data, loading, fetchMore }: Props) {
         <TableBody>
           { transactions.map((transaction: Transaction) => {
             const statusColor = STATUS_COLOR_MAP[transaction.state];
+            const sortedReviewers = [...transaction.reviewer_names || []].sort();
+
             return (
               <Row key={transaction.id}>
                 <Cell>
@@ -69,7 +71,7 @@ export default function TransactionsTable({ data, loading, fetchMore }: Props) {
                   <div>{transaction.sender_entity_handle}</div>
                 </Cell>
                 <Cell>
-                  {transaction.reviewer_names?.map((name) => {
+                  {sortedReviewers.map((name) => {
                     const reviewerColor = reviewersList.indexOf(name) || 0;
                     return (
                       <ColorPill key={name} className="mr-2" index={reviewerColor}>{name}</ColorPill>

@@ -7,11 +7,11 @@ import { FilterActions, FiltersState, State, GetTransactionsResponse } from '../
 
 interface FilterBarProps {
   dispatch: React.Dispatch<any>;
-  state: FiltersState;
+  filtersState: FiltersState;
   data: GetTransactionsResponse;
 }
 
-export default function FilterBar({ dispatch, state, data }: FilterBarProps) {
+export default function FilterBar({ dispatch, filtersState, data }: FilterBarProps) {
   function updateReviewerName(reviewerName: string) {
     dispatch({
       type: FilterActions.updateReviewerName,
@@ -20,7 +20,7 @@ export default function FilterBar({ dispatch, state, data }: FilterBarProps) {
   }
 
   function updateStatus(status: State) {
-    if (state.statuses?.includes(status)) {
+    if (filtersState.statuses?.includes(status)) {
       dispatch({
         type: FilterActions.removeStatus,
         payload: status,
@@ -42,19 +42,19 @@ export default function FilterBar({ dispatch, state, data }: FilterBarProps) {
 
   return (
     <div className="flex min-h-14 items-center">
-      <FilterBarSearch setRecipientName={updateRecipient} recipientName={state.recipientName} />
+      <FilterBarSearch setRecipientName={updateRecipient} recipientName={filtersState.recipientName} />
       <FilterBarDivider />
       <FilterBarActiveFilters
         setReviewerName={updateReviewerName}
         setStatus={updateStatus}
         setRecipientName={updateRecipient}
-        state={state}
+        filtersState={filtersState}
       />
       <FilterBarDivider />
       <FilterBarControls
         setReviewerName={updateReviewerName}
         setStatuses={updateStatus}
-        state={state}
+        filtersState={filtersState}
         reviewersList={data.reviewersList || []}
       />
     </div>

@@ -4,19 +4,19 @@ import Pill from '../../design-library/Pill';
 import { STATUS_COLOR_MAP, State } from '../../../types';
 
 interface Props {
-  state: FiltersState;
+  filtersState: FiltersState;
   setReviewerName: (name: string) => void;
   setStatus: (status: State) => void;
   setRecipientName: (name: string) => void;
 }
 
-export default function FilterBarActiveFilters({ state, setReviewerName, setStatus, setRecipientName }: Props) {
+export default function FilterBarActiveFilters({ filtersState, setReviewerName, setStatus, setRecipientName }: Props) {
   return (
     <div className="grow">
       <div className="flex items-center">
         <div className="text-primary mr-4 shrink-0">Filtering by</div>
         <div className="grow flex flex-wrap">
-          {state.statuses.map((state) => {
+          {filtersState.statuses.map((state) => {
             const color = STATUS_COLOR_MAP[state];
 
             return (
@@ -30,21 +30,21 @@ export default function FilterBarActiveFilters({ state, setReviewerName, setStat
               </div>
             )
           })}
-          {state.recipientName && (
+          {filtersState.recipientName && (
             <div className="mr-2 mb-1">
               <Pill
                 name="Recipient"
-                value={<span>{state.recipientName}</span>}
+                value={<span>{filtersState.recipientName}</span>}
                 onDismiss={() => setRecipientName('') }
                 dismissable
               />
             </div>
           )}
-          {state.reviewerName && (
+          {filtersState.reviewerName && (
             <div className="mr-2 mb-1">
               <Pill
                 name="Reviewer"
-                value={<span>{state.reviewerName}</span>}
+                value={<span>{filtersState.reviewerName}</span>}
                 onDismiss={() => setReviewerName('') }
                 dismissable
               />

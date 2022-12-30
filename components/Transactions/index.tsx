@@ -40,11 +40,11 @@ const defaultData = {
 }
 
 export default function Transactions() {
-  const [state, dispatch] = React.useReducer(reducer, DEFAULT_FILTERS_STATE);
+  const [filtersState, dispatch] = React.useReducer(reducer, DEFAULT_FILTERS_STATE);
   const { data, loading, error, fetchMore } = useQuery(QUERY,
     { 
       variables: {
-        ...state,
+        ...filtersState,
         page: 1,
         pageSize: 6,
       }
@@ -60,7 +60,7 @@ export default function Transactions() {
         </VerticalSpacing>
       </div>
       <div className="pb-4">
-        <FilterBar dispatch={dispatch} state={state} data={data?.getTransactions || defaultData} />
+        <FilterBar dispatch={dispatch} filtersState={filtersState} data={data?.getTransactions || defaultData} />
       </div>
       <div className="pb-3 grow">
         <TransactionsTable

@@ -8,15 +8,15 @@ import { State, FiltersState } from '../../../types';
 interface Props {
   setReviewerName: (reviewerName: string) => void;
   setStatuses: (state: State) => void;
-  state: FiltersState;
+  filtersState: FiltersState;
   reviewersList: string[];
 }
 
-export default function FilterBarControls({ setReviewerName, setStatuses, state, reviewersList }: Props) {
+export default function FilterBarControls({ setReviewerName, setStatuses, filtersState, reviewersList }: Props) {
   const [popupIsOpen, setPopupIsOpen] = React.useState(false);
-  const activeStates = state.statuses;
-  const reviewersOptions = ["", ...reviewersList];
-  const SELECT_DEFAULT = "Search by name...";
+  const activeStates = filtersState.statuses;
+  const reviewersOptions = ["", ...reviewersList].sort();
+  const SELECT_PLACEHOLDER = "Search by name...";
 
   return (
     <div className="relative">
@@ -41,10 +41,10 @@ export default function FilterBarControls({ setReviewerName, setStatuses, state,
             </VerticalSpacingSize>
             <VerticalSpacingSize>
               <div className="font-medium">Reviewer</div>
-              <Select value={state.reviewerName || ''} onChange={(reviewer) => { setReviewerName(reviewer) }}>
+              <Select value={filtersState.reviewerName || ''} onChange={(reviewer) => { setReviewerName(reviewer) }}>
                 {
                   reviewersOptions.map((name) => {
-                    const reviewer = name || SELECT_DEFAULT;
+                    const reviewer = name || SELECT_PLACEHOLDER;
                     return (<Option key={reviewer} value={name}>{reviewer}</Option>)
                   })
                 }
