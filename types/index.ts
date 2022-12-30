@@ -1,9 +1,8 @@
 export enum FilterActions {
-  updateReviewerName,
   addStatus,
   removeStatus,
+  updateReviewerName,
   updateRecipientName,
-  updatePage,
 }
 
 export type State = keyof typeof STATUS_COLOR_MAP;
@@ -32,9 +31,7 @@ export enum STATUS_COLOR_MAP {
 }
 
 export interface FiltersState {
-  page: number;
-  pageSize: number;
+  recipientName: string;
   reviewerName: string;
   statuses: State[];
-  recipientName: string;
 }

@@ -5,68 +5,10 @@ import SubHeading from '../../components/design-library/SubHeading';
 import FilterBar from '../../components/FilterBar/FilterBar';
 import ClientOnly from '../../components/ClientOnly';
 import TransactionsTable from '../../components/TransactionsTable';
-import { FilterActions, FiltersState } from '../../types';
-
-
-
-interface FilterAction {
-  type: FilterActions;
-  payload: any;
-}
-
-const DEFAULT_FILTERS_STATE = {
-  pageSize: 6,
-  page: 1,
-  reviewerName: '',
-  statuses: [],
-  recipientName: '',
-  totalTransactions: 0,
-}
-
-function filtersReducer(state: FiltersState, action: FilterAction) {
-  console.log("reducer");
-  switch(action.type) {
-    case FilterActions.updateRecipientName: {
-      return {
-        ...state,
-        recipientName: action.payload,
-      }
-    }
-    case FilterActions.updateReviewerName: {
-      return {
-        ...state,
-        reviewerName: action.payload,
-      }
-    }
-    case FilterActions.addStatus: {
-      const statuses = Array.from(state.statuses);
-      statuses.push(action.payload);
-
-      return {
-        ...state,
-        statuses,
-      }
-    }
-    case FilterActions.removeStatus: {
-      const statuses = state.statuses.filter((state) => state !== action.payload);
-      return {
-        ...state,
-        statuses,
-      }
-    }
-    case FilterActions.updatePage: {
-      return {
-        ...state,
-        page: action.payload,
-      }
-    }
-    default:
-      return state;
-  }
-}
+import reducer, { DEFAULT_FILTERS_STATE } from './reducer';
 
 export default function Transactions() {
-  const [state, dispatch] = React.useReducer(filtersReducer, DEFAULT_FILTERS_STATE);
+  const [state, dispatch] = React.useReducer(reducer, DEFAULT_FILTERS_STATE);
 
   return (
     <>
@@ -81,7 +23,7 @@ export default function Transactions() {
       </div>
       <div className="pb-3 grow">
         <ClientOnly className="h-full">
-          <TransactionsTable state={state} dispatch={dispatch} />
+          <TransactionsTable state={state} />
         </ClientOnly>
         </div>
     </>

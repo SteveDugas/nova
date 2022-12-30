@@ -39,13 +39,13 @@ function splitIntoPages(data: Transaction[], pageSize: number) {
     return prev;
   }, [[]])
 }
-
+// TODO: maybe turn off caching
 export const resolvers = {
   Query: {
     getTransactions: async (_: any, args: GetTransactionsArgs) => {
       const data = mockData;
       const pageSize = args.page_size || DEFAULT_PAGE_SIZE;
-      const page = args.page || 1;
+      let page = args.page || 1;
       let returnTransactions: Transaction[] = data;
 
       if (args.recipient_name?.length) {
@@ -61,7 +61,15 @@ export const resolvers = {
       const total = returnTransactions.length;
 
       if (returnTransactions.length > pageSize) {
-        returnTransactions = splitIntoPages(returnTransactions, pageSize).at(page-1);
+        const pages = splitIntoPages(returnTransactions, pageSize)
+        if (pages.at(page-1)) {
+          returnTransactions = pages.at(page-1);
+        } else {
+          returnTransactions = pages.at(0);
+          page = 1;
+        }
+      } else {
+        page = 1;
       }
 
       return {

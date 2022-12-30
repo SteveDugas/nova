@@ -1,3 +1,4 @@
+import React from 'react';
 import { useQuery, gql } from "@apollo/client";
 import TimeAgo from 'javascript-time-ago';
 import ReactTimeAgo from 'react-time-ago';
@@ -46,13 +47,16 @@ query GetTransactions($page: Int, $pageSize: Int, $reviewerName: String, $status
 
 interface Props {
   state: FiltersState;
-  dispatch: React.Dispatch<any>;
 }
 
-export default function TransactionsTable({ state, dispatch }: Props) {
-  const { data, loading, error } = useQuery(QUERY,
+export default function TransactionsTable({ state }: Props) {
+  const { data, loading, error, fetchMore } = useQuery(QUERY,
     { 
-      variables: state
+      variables: {
+        ...state,
+        page: 1,
+        pageSize: 6,
+      }
     }
   );
 
@@ -60,7 +64,7 @@ export default function TransactionsTable({ state, dispatch }: Props) {
     return null;
   }
 
-  const { transactions, total, page_size } = data.getTransactions;
+  const { transactions, total, page_size, page } = data.getTransactions;
 
   return (
     <div className="bg-white rounded-xl shadow-light h-full max-h-[600px] flex flex-col justify-between text-sm">
@@ -110,11 +114,15 @@ export default function TransactionsTable({ state, dispatch }: Props) {
           })}
         </TableBody>
       </Table>
-      <Paging currentPage={state.page-1} totalPages={Math.ceil(total/state.pageSize)} handleChangePage={(pageNum: number) => {
-        dispatch({
-          type: FilterActions.updatePage,
-          payload: pageNum,
-        });
+      { transactions.length < 1 && (
+        <div className="text-center text-xl">There are no transactions that match your filters. Try a different search.</div>
+      )}
+      <Paging currentPage={page-1} totalPages={Math.ceil(total/page_size)} handleChangePage={(pageNum: number) => {
+        fetchMore({
+          variables: {
+            page: pageNum,
+          }
+        })
       }} />
     </div>
   )

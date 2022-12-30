@@ -204,7 +204,7 @@ const mockData: Transaction[] = [
     first_recipient_name: 'Steve Dugas',
     first_recipient_email: 'steven.dugas@gmail.com',
     first_recipient_completed_at: 1672278978745,
-    state: 'Submitted',
+    state: 'In Progress',
     progress: 1,
     latest_state_change_at: 1672278978745,
     reviewer_names: ['Random Person 1', 'Pradyuman Vig']
