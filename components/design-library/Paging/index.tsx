@@ -3,9 +3,10 @@ import ReactPaginate from 'react-paginate';
 interface Props {
   totalPages: number;
   handleChangePage: (pageNumber: number) => void;
+  currentPage: number;
 }
 
-export default function Paging({ totalPages, handleChangePage }: Props) {
+export default function Paging({ totalPages, handleChangePage, currentPage }: Props) {
   function handlePageClick(event: any) {
     console.log("Page num", event.selected);
     handleChangePage(event.selected + 1);
@@ -21,6 +22,7 @@ export default function Paging({ totalPages, handleChangePage }: Props) {
         pageCount={totalPages}
         pageClassName="page"
         previousLabel="Previous"
+        forcePage={currentPage}
       />
     </div>
   )

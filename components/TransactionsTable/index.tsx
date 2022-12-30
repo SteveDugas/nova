@@ -1,4 +1,7 @@
 import { useQuery, gql } from "@apollo/client";
+import TimeAgo from 'javascript-time-ago';
+import ReactTimeAgo from 'react-time-ago';
+import en from 'javascript-time-ago/locale/en.json';
 import { Transaction, FiltersState, FilterActions } from '../../types';
 import {
   Cell,
@@ -13,6 +16,10 @@ import Table from '../design-library/Table';
 import Paging from '../design-library/Paging';
 import ColorPill from "./ColorPill";
 import { STATUS_COLOR_MAP } from "../../types";
+
+TimeAgo.addDefaultLocale(en);
+
+// TODO: Only have the table body in ClientOnly so there's no flicker
 
 const QUERY = gql`
 query GetTransactions($page: Int, $pageSize: Int, $reviewerName: String, $statuses: [String], $recipientName: String) {
@@ -74,7 +81,10 @@ export default function TransactionsTable({ state, dispatch }: Props) {
             const statusColor = STATUS_COLOR_MAP[transaction.state];
             return (
               <Row key={transaction.id}>
-                <Cell><span className={classnames(statusColor, 'font-medium')}>{transaction.state}</span></Cell>
+                <Cell>
+                  <div className={classnames(statusColor, 'font-medium')}>{transaction.state}</div>
+                  <div className="text-sm text-[#c8c8c8] leading-tight"><ReactTimeAgo locale="en-US" date={new Date(transaction.latest_state_change_at)} /></div>
+                </Cell>
                 <Cell>
                   <div className="font-medium text-[#1c1c1c] leading-tight">{transaction.first_recipient_name}</div>
                   <div className="text-sm text-[#c8c8c8] leading-tight">{transaction.first_recipient_email}</div>
@@ -100,7 +110,7 @@ export default function TransactionsTable({ state, dispatch }: Props) {
           })}
         </TableBody>
       </Table>
-      <Paging totalPages={Math.ceil(total/state.pageSize)} handleChangePage={(pageNum: number) => {
+      <Paging currentPage={state.page-1} totalPages={Math.ceil(total/state.pageSize)} handleChangePage={(pageNum: number) => {
         dispatch({
           type: FilterActions.updatePage,
           payload: pageNum,
