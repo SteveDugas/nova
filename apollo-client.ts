@@ -19,5 +19,3 @@ const client = new ApolloClient({
 });
 
 export default client;
-
-// checking about switching to offset, maybe this will help swithcing between sets getting the cache stuck

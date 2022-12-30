@@ -3,7 +3,6 @@ import {
   useTableState,
   TableStateProps,
 } from 'react-stately';
-// import { AriaTableProps } from '@react-aria/table';
 import {useRef} from 'react';
 import TableRowGroup from './TableRowGroup';
 import TableHeaderRow from './TableHeaderRow';

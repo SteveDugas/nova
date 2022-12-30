@@ -2,7 +2,6 @@ import React from 'react';
 import { useTableRow, useFocusRing, mergeProps, GridRowProps } from 'react-aria';
 import { TableState } from "@react-stately/table";
 import { GridNode } from "@react-types/grid";
-import { Direction, KeyboardDelegate, Node, Collection, AriaLabelingProps, DOMAttributes, DOMProps, FocusableElement } from "@react-types/shared";
 
 interface Props {
   item: GridNode<object>,

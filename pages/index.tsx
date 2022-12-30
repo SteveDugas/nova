@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import Page from '../components/design-library/Page';
 import Transactions from '../components/Transactions';
 import ClientOnly from '../components/ClientOnly';

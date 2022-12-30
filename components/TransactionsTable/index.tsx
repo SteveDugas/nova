@@ -9,7 +9,6 @@ import {
   Row,
   TableBody,
   TableHeader,
-  useTableState
 } from 'react-stately';
 import classnames from 'classnames';
 import Table from '../design-library/Table';
