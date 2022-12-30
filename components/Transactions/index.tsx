@@ -69,15 +69,21 @@ export default function Transactions() {
   const [state, dispatch] = React.useReducer(filtersReducer, DEFAULT_FILTERS_STATE);
 
   return (
-    <VerticalSpacing>
-      <VerticalSpacing size={VerticalSpacingSize.SMALL}>
-        <Heading>Transactions</Heading>
-        <SubHeading>Your business contracts, including fund subscriptions or applications.</SubHeading>
-      </VerticalSpacing>
-      <FilterBar dispatch={dispatch} state={state} />
-      <ClientOnly>
-        <TransactionsTable state={state} dispatch={dispatch} />
-      </ClientOnly>
-    </VerticalSpacing>
+    <>
+      <div className="pb-3">
+        <VerticalSpacing size={VerticalSpacingSize.SMALL}>
+          <Heading>Transactions</Heading>
+          <SubHeading>Your business contracts, including fund subscriptions or applications.</SubHeading>
+        </VerticalSpacing>
+      </div>
+      <div className="pb-3">
+        <FilterBar dispatch={dispatch} state={state} />
+      </div>
+      <div className="pb-3 grow">
+        <ClientOnly className="h-full">
+          <TransactionsTable state={state} dispatch={dispatch} />
+        </ClientOnly>
+        </div>
+    </>
   )
 }

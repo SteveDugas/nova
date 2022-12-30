@@ -12,13 +12,14 @@ export default function Paging({ totalPages, handleChangePage }: Props) {
   }
 
   return (
-    <div>
+    <div data-component="paging" className="p-4">
       <ReactPaginate
         breakLabel="..."
         nextLabel="Next"
         onPageChange={handlePageClick}
         pageRangeDisplayed={5}
         pageCount={totalPages}
+        pageClassName="page"
         previousLabel="Previous"
       />
     </div>

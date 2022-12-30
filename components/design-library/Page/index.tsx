@@ -32,6 +32,6 @@ const CircularXXFont = localFont({
 
 export default function Page({ children }: Props) {
   return (
-    <main className={classnames("container mx-auto p-4 tracking-tight text-primary", CircularXXFont.className)}>{children}</main>
+    <main className={classnames("container mx-auto p-4 tracking-tight text-primary h-full flex flex-col", CircularXXFont.className)}>{children}</main>
   )
 }

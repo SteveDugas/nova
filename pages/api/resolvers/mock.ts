@@ -4,7 +4,7 @@ const mockData: Transaction[] = [
   {
     id: '9fa83b-234haf-2h4539',
     created_at: 1672278978745,
-    sender_entity_handle: 'pnta-earlystage2',
+    sender_entity_handle: 'Pradyuman Vig',
     template_name: 'Pantera Early Stage Token Template',
     first_recipient_name: 'Pradyuman Vig',
     first_recipient_email: 'pradyuman@novahq.com',
@@ -17,7 +17,7 @@ const mockData: Transaction[] = [
   {
     id: '9fa83b-234haf-2h4540',
     created_at: 1672278978745,
-    sender_entity_handle: 'pnta-earlystage2',
+    sender_entity_handle: 'Pradyuman Vig',
     template_name: 'Pantera Early Stage Token Template',
     first_recipient_name: 'Steve Dugas',
     first_recipient_email: 'steven.dugas@gmail.com',
@@ -30,7 +30,7 @@ const mockData: Transaction[] = [
   {
     id: '9fa83b-234haf-2h4541',
     created_at: 1672278978745,
-    sender_entity_handle: 'pnta-earlystage2',
+    sender_entity_handle: 'Pradyuman Vig',
     template_name: 'Pantera Early Stage Token Template',
     first_recipient_name: 'Random Person 1',
     first_recipient_email: 'randomperson1@novahq.com',
@@ -43,7 +43,7 @@ const mockData: Transaction[] = [
   {
     id: '9fa83b-234haf-2h4542',
     created_at: 1672278978745,
-    sender_entity_handle: 'pnta-earlystage2',
+    sender_entity_handle: 'Pradyuman Vig',
     template_name: 'Pantera Early Stage Token Template',
     first_recipient_name: 'Random Person 1',
     first_recipient_email: 'randomperson1@novahq.com',
@@ -56,7 +56,7 @@ const mockData: Transaction[] = [
   {
     id: '9fa83b-234haf-2h4543',
     created_at: 1672278978745,
-    sender_entity_handle: 'pnta-earlystage2',
+    sender_entity_handle: 'Pradyuman Vig',
     template_name: 'Pantera Early Stage Token Template',
     first_recipient_name: 'Random Person 2',
     first_recipient_email: 'randomperson2@novahq.com',
@@ -69,7 +69,7 @@ const mockData: Transaction[] = [
   {
     id: '9fa83b-234haf-2h4544',
     created_at: 1672278978745,
-    sender_entity_handle: 'pnta-earlystage2',
+    sender_entity_handle: 'Pradyuman Vig',
     template_name: 'Pantera Early Stage Token Template',
     first_recipient_name: 'Pradyuman Vig',
     first_recipient_email: 'pradyuman@novahq.com',
@@ -82,7 +82,7 @@ const mockData: Transaction[] = [
   {
     id: '9fa83b-234haf-2h4545',
     created_at: 1672278978745,
-    sender_entity_handle: 'pnta-earlystage2',
+    sender_entity_handle: 'Pradyuman Vig',
     template_name: 'Pantera Early Stage Token Template',
     first_recipient_name: 'Steve Dugas',
     first_recipient_email: 'steven.dugas@gmail.com',

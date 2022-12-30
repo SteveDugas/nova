@@ -18,11 +18,11 @@ export default function TableColumnHeader({ column, state }: Props) {
 
   return (
     <th
+      className="p-4 font-medium"
       {...mergeProps(columnHeaderProps, focusProps)}
       colSpan={column.colspan}
       style={{
         textAlign: column.colspan > 1 ? 'center' : 'left',
-        padding: '5px 10px',
         outline: isFocusVisible ? '2px solid orange' : 'none',
         cursor: 'default'
       }}

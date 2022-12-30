@@ -1,3 +1,13 @@
+export enum FilterActions {
+  updateReviewerName,
+  addStatus,
+  removeStatus,
+  updateRecipientName,
+  updatePage,
+}
+
+export type State = keyof typeof STATUS_COLOR_MAP;
+
 export interface Transaction {
   id: string;
   created_at: number;
@@ -6,7 +16,7 @@ export interface Transaction {
   first_recipient_name?: string;
   first_recipient_email?: string;
   first_recipient_completed_at?: number;
-  state: string;
+  state: State;
   progress: number;
   latest_state_change_at: number;
   reviewer_names?: string[];
@@ -20,16 +30,6 @@ export enum STATUS_COLOR_MAP {
   'Pending' = 'text-pending',
   'Completed' = 'text-completed',
 }
-
-export enum FilterActions {
-  updateReviewerName,
-  addStatus,
-  removeStatus,
-  updateRecipientName,
-  updatePage,
-}
-
-export type State = keyof typeof STATUS_COLOR_MAP;
 
 export interface FiltersState {
   page: number;

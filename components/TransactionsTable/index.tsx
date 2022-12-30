@@ -8,8 +8,11 @@ import {
   TableHeader,
   useTableState
 } from 'react-stately';
+import classnames from 'classnames';
 import Table from '../design-library/Table';
 import Paging from '../design-library/Paging';
+import ColorPill from "./ColorPill";
+import { STATUS_COLOR_MAP } from "../../types";
 
 const QUERY = gql`
 query GetTransactions($page: Int, $pageSize: Int, $reviewerName: String, $statuses: [String], $recipientName: String) {
@@ -23,6 +26,7 @@ query GetTransactions($page: Int, $pageSize: Int, $reviewerName: String, $status
       first_recipient_name,
       first_recipient_email,
       first_recipient_completed_at,
+      sender_entity_handle,
       template_name,
       state,
     }
@@ -52,9 +56,9 @@ export default function TransactionsTable({ state, dispatch }: Props) {
   const { transactions, total, page_size } = data.getTransactions;
 
   return (
-    <div>
+    <div className="bg-white rounded-xl shadow-light h-full max-h-[600px] flex flex-col justify-between text-sm">
       <Table
-        aria-label="Example static collection table"
+        aria-label="Transactions table"
         style={{ height: '210px', maxWidth: '400px' }}
       >
         <TableHeader>
@@ -63,31 +67,33 @@ export default function TransactionsTable({ state, dispatch }: Props) {
           <Column>Template</Column>
           <Column>Invited by</Column>
           <Column>Reviewers</Column>
-          <Column>Unique ID</Column>
+          <Column><div className="text-right">Unique ID</div></Column>
         </TableHeader>
         <TableBody>
           { transactions.map((transaction: Transaction) => {
+            const statusColor = STATUS_COLOR_MAP[transaction.state];
             return (
               <Row key={transaction.id}>
-                <Cell>{transaction.state}</Cell>
+                <Cell><span className={classnames(statusColor, 'font-medium')}>{transaction.state}</span></Cell>
                 <Cell>
-                  <div>{transaction.first_recipient_name}</div>
-                  <div>{transaction.first_recipient_email}</div>
+                  <div className="font-medium text-[#1c1c1c] leading-tight">{transaction.first_recipient_name}</div>
+                  <div className="text-sm text-[#c8c8c8] leading-tight">{transaction.first_recipient_email}</div>
                 </Cell>
                 <Cell>
-                  <div>{transaction.template_name}</div>
+                  <div className="font-medium text-[#1c1c1c] leading-tight">{transaction.template_name}</div>
+                </Cell>
+                <Cell>
                   <div>{transaction.sender_entity_handle}</div>
                 </Cell>
                 <Cell>
-                  <div>{transaction.sender_entity_handle}</div>
-                </Cell>
-                <Cell>
-                  {transaction.reviewer_names?.map((name) => {
-                    return <div key={name}>{name}</div>
+                  {transaction.reviewer_names?.map((name, idx) => {
+                    return (
+                      <ColorPill key={name} className="mr-2" index={idx}>{name}</ColorPill>
+                    )
                   })}
                 </Cell>
                 <Cell>
-                  {transaction.id}
+                <div className="font-medium text-[#1c1c1c] leading-tight text-right">{transaction.id}</div>
                 </Cell>
               </Row>
             )

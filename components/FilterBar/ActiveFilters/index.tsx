@@ -18,10 +18,9 @@ export default function FilterBarActiveFilters({ state, setReviewerName, setStat
         <div className="grow flex flex-wrap">
           {state.statuses.map((state) => {
             const color = STATUS_COLOR_MAP[state];
-            console.log("COLOR", color);
 
             return (
-              <div className="mr-2 mb-1">
+              <div className="mr-2 mb-1" key={state}>
                 <Pill
                   name="Status"
                   value={<span className={classnames(STATUS_COLOR_MAP[state])}>{state}</span>}

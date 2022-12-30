@@ -13,9 +13,9 @@ export default function TableCell({ cell, state }: Props) {
 
   return (
     <td
+      className="p-4"
       {...mergeProps(gridCellProps, focusProps)}
       style={{
-        padding: '5px 10px',
         outline: isFocusVisible ? '2px solid orange' : 'none',
         cursor: 'default'
       }}

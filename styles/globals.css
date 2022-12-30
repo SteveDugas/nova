@@ -109,3 +109,48 @@ a {
     color-scheme: dark;
   }
 }
+
+
+/* React-paginate */
+[data-component="paging"] ul {
+  display: flex;
+  width: 100%;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+}
+
+[data-component="paging"] .previous,
+[data-component="paging"] .next {
+  color: #909090;
+  font-size: 14px;
+  letter-spacing: normal;
+  position: absolute;
+  font-weight: 500;
+  top: 0;
+}
+
+[data-component="paging"] .previous {
+  left: 0;
+}
+
+[data-component="paging"] .next {
+  right: 0;
+}
+
+[data-component="paging"] .disabled {
+  color: #c8c8c8;
+}
+
+[data-component="paging"] .page {
+  margin: 0 2px;
+  color: #c8c8c8;
+  font-weight: 500;
+}
+[data-component="paging"] .page a {
+  padding: 0 2px;
+}
+
+[data-component="paging"] .page.selected {
+  color: #7144f2;
+}
